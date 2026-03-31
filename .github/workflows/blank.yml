@@ -2,14 +2,26 @@ name: Test OIDC Login
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: "Select target environment"
+        required: true
+        type: choice
+        options:
+          - maestro-dev
+          - maestro-prod
+          - ecab-dev
+          - ecab-qa
 
 permissions:
   id-token: write
   contents: read
 
 jobs:
-  test:
+  test-oidc:
+    name: Test Azure OIDC Login
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
 
     steps:
       - name: Checkout
@@ -22,8 +34,8 @@ jobs:
           tenant-id: ${{ vars.AZURE_TENANT_ID }}
           subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Verify Azure Context
-        run: az account show
+      - name: Show Azure Subscription Context
+        run: az account show --output table
 
       - name: List Resource Groups
         run: az group list --output table
