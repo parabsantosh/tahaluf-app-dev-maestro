@@ -8,10 +8,10 @@ on:
         required: true
         type: choice
         options:
-          - maestro-dev
-          - maestro-prod
-          - ecab-dev
-          - ecab-qa
+          - DEV-MAESTRO
+          - PROD-MAESTRO
+          - DEV-ECAB
+          - QA-ECAB
 
 permissions:
   id-token: write
